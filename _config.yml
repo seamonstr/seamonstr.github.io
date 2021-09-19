@@ -10,6 +10,7 @@ author:
 
 # GitHub Pages / Jekyll configuration
 baseurl:            ''
+gems: [jekyll-paginate]
 permalink:          /:title/
 paginate:           5
 defaults:
