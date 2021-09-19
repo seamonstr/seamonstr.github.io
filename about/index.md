@@ -3,8 +3,4 @@ layout: page
 title: About
 ---
 
-Hey there! This page is included as an example. Feel free to customize it for
-your own use.
-
-Follow [instructions](<http://www.texts.io/support/0017/>) to publish your blog
-on GitHub Pages.
+This a foolish, little, entirely ignorable blog for a longtime nerd and ex-developer to document things for himself so he doesn't forget them.
