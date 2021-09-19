@@ -1,12 +1,12 @@
-title:              Blog
-tagline:            on GitHub Pages
-description:        Content-focused template for a blog hosted on GitHub Pages.
-url:                http://YourName.github.io
+title:              Simon Woodward - personal blog
+tagline:            A place to document, for myself, the things I figure out.
+description:        
+url:                http://seamonstr.github.io
 
 author:
-  name:             Your Name
-  url:              https://twitter.com/YourName
-  email:            YourName@gmail.com
+  name:             Simon Woodward 
+  url:              https://twitter.com/seamonstr
+  email:            simon@redcabbage.org
 
 # GitHub Pages / Jekyll configuration
 baseurl:            ''
