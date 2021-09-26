@@ -21,3 +21,7 @@ defaults:
       layout:       post
 
 theme: jekyll-theme-minimal
+
+# Embedded comments
+talkyard_server_url: https://site-82fqiczdy1.talkyard.net
+talkyard_script_url: https://c1.ty-cdn.net/-/talkyard-comments.min.js
