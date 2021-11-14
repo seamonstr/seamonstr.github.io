@@ -12,4 +12,4 @@ This template is based on [Lanyon](<https://github.com/poole/lanyon>) and
 License
 -------
 
-Open sourced under the [MIT license](<LICENSE.md>).
+Open sourced under the [MIT license](<LICENSE.md>). Whee.
