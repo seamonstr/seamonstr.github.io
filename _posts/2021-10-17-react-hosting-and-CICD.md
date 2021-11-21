@@ -1,7 +1,7 @@
---
+---
 title: Build a deploy to S3
 published: false
---
+---
 
 # 
 ### Building a react app for every push to `master`
@@ -11,7 +11,7 @@ Okay, CI... CD comes later.
 I've done a bit of messing about with CircleCI previously, and that was okay, but this time out I'm going to go with GitHub actions.
 
 #### Github actions - intro
-GitHub Actions allows you to associate workflows to events in GitHub for your repo. For example, whenever there's a push to your repo you can trigger a workflow to kick off.
+GitHub Actions allows you to associate workflows to events in GituHb for your repo. For example, whenever there's a push to your repo you can trigger a workflow to kick off.
 
 You configure your workflows in yaml files in the `.github` directory of your repo. A full description of workflows, jobs, steps and so on is [here](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions), but put simply a `job` is a set of commands that execute one after the other in the same execution context (ie. shell sesssion).  Anything you create or set in one step of a job will be available to subsequent steps.
 
