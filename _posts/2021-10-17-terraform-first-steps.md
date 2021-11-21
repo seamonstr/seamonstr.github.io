@@ -1,6 +1,6 @@
 ---
-title: Terraform: first steps
-published:false
+title: "Terraform: first steps"
+published: false
 ---
 
 In this step I want to figure out how to host the SPA (single page application) that I created in my last post. It's just a `Hello World` React app, so it just needs some HTML, JS and CSS hosting somewhere. Of course, I want to serve it from a decent URL, and I also want it to have a TLS certificate and `https` goodness, so it needs a reasonably capable host.
