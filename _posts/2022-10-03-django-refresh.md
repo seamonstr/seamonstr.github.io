@@ -30,27 +30,26 @@ From the project's root directory (where `manage.py` is), do `python manage.py s
 
 ## Mapping URLs 
 
-`<projectdir>/urls.py` has a `urlpatterns` list of `django.urls.Path` objects used to publish the URL set from within the apps.  Likewise, each app has a (by convention; can be any package name) `urls.py` which is a list of Path objects.
+URLs are mapped at project level and at app level:
+* `<projectdir>/urls.py` has a `urlpatterns` list of `django.urls.Path` objects used to publish the URLs from within the apps.
+* Likewise, each app has a (by convention; can be any package name) `urls.py` which has two members: an `app_name` and a list of Path objects `urlpatterns`.
 
-Each `Path` maps a url to one of:
-1. *For the project level mapping:* The python module for the app; the module has a "url_patterns" list of its own, and an app_name.
-1. *For the app level mapping:* A callable which is the view renderer, as declared in the apps `views.py`. The callable is called with a HttpRequest obj plus some kwargs from the route. Returns a HttpResponse obj. Also takes kwargs (from the URL?) and a name to use when referring to the URL fromm elsewhere.
-
-So, map the app's URLs into the project with a string and the urls.py's module name.
-Map each view at the app level with a string and the callable that renders the view.
+Generally speaking, each `Path` maps a url to one of:
+1. *For the project level mapping:* the app name and the list of sub-URLs.  These are supplied by calling `django.urls.include` pass the name of the python module for the app.  The module has a `url_patterns` list of its own, and an `app_name` that the `include` call looks for; it passes those in a tuple to the Path's constructor.
+1. *For the app level mapping:* A callable which is the view renderer, as declared in the apps `views.py`. The callable is called with a HttpRequest obj plus some kwargs from the route. Returns a HttpResponse obj. Also takes kwargs (from the URL?) and a name to use when referring to the URL fromm elsewhere. Can be passed by calling `include`, but you can just pass the callable instead.
 
 So:
 
 ```
 project
-	manage.py
-	/projectkg
-		/urls.py
-			urlpatterns - [Path] mapping strings to modules
-	/appmodule
-		/urls.py # Needs creating!
-			urlpatterns - [Path] mapping strings to view callables
-		/views.py # Contain the view callables
+  manage.py
+  /projectkg
+    /urls.py
+      urlpatterns - [Path] mapping strings to modules
+  /appmodule
+    /urls.py # Needs creating!
+      urlpatterns - [Path] mapping strings to view callables
+    /views.py # Contain the view callables
 
 ```
 
