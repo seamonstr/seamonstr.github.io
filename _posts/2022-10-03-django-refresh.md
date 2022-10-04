@@ -45,10 +45,11 @@ project
   manage.py
   /projectkg
     /urls.py
-      urlpatterns - [Path] mapping strings to modules
+      urlpatterns - [Path] mapping strings to app_name and urlpatterns (via calls to include())
   /appmodule
     /urls.py # Needs creating!
       urlpatterns - [Path] mapping strings to view callables
+      app_name - name of the app to be published
     /views.py # Contain the view callables
 
 ```
