@@ -67,10 +67,12 @@ The DB schema for the app is derived from the model classes defined in `<app>/mo
 * Metadata supplied in the constructor as kwargs: max_length, default.
 * `ForeignKey` takes a type that is the destination of the foreign key relationship; also a `on_delete = models.CASCADE`, or other value.
 * Do `python manage.py makemigrations` to generate the migration code the for the new models. Migration code for an app is in `<appdir>/migrations/*.py`
+  * If you've created migrations and deleted them, sometimes the above doesn't work - you have to specify the name of your app on the makemigrations line to get it to generate them.
 * Can see the sql that would be generated for these classes by `python migrate.py sqlmigration helloworld 0001`. `0001` is the index of the migration to generate for.
 * You don't have to specify identifiers; Django does this automatically, and creates foreign key fields too
 
 ## Django data API
+* This only works if the admin app is 
 * Can get a django shell with `python manage.py shell`
 * Import the models: `from <app>.models import Blah, Bloo`
 * `Blah.objects` is a manager object that is query interface.
