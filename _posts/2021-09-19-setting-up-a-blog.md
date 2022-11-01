@@ -44,7 +44,10 @@ Testing locally
 
 Final point: it's really useful to be able to look at the site on your local machine before you push your post to your site.  As Jekyll generates static HTML, this is a doddle.
 
-You'll need [Ruby fully installed locally](https://www.ruby-lang.org/en/documentation/installation/), and then you'll need to [install jekyll](https://jekyllrb.com/docs/installation/ubuntu/).
+You'll need to:
+* Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/), 
+* Install [Jekyll](https://jekyllrb.com/docs/installation/ubuntu/),
+* Add 'webrick' (which Jekyll expects to be bundled, even though it was removed from default Ruby): `bundle add webrick`
 
 Then, you make the changes you want to your pages in your local repo (new blog, for example), and run `bundle exec jekyll serve` from the root of your publishing source. This will generate your HTML and start a little webserver to serve it.
 
