@@ -1,6 +1,6 @@
-= Understanding how python callstacks work in async
+# Understanding how python callstacks work in async
 
-== Generator points
+## Generator points
 
 * Generators are functions that `yield`, or generator expressions.
 * Their execution works just like a normal function, except that they can `yield` mid-call.
@@ -11,7 +11,7 @@
 		* The caller calls `send(val)` on the generator: resumes after the yield; the yield evaluates to `val`
 		* The caller calls `throw(E)` on the generator: acts as if the yield threw the provided exception. If the generator function doesn't catch the exception, or if it throws a different one, then that exception will be propagated to the caller.
 
-===`Send` turns generators into consumers
+### `Send` turns generators into consumers
 
 Because `send` causes 'yield' to return a value, you can write generators to act as consumers in a pipeline, for example. You write the generator as an infinite loop where it does a `yield` at the start of that loop to receive a value. It then uses that value (processes it in some way) before passing it on to another generator that was configured as the destination.
 
@@ -29,7 +29,7 @@ def consumer(func):
     return wrapper
 ```
 
-== Basics
+## Basics
 
 * Declare a function as a coroutine with async def.
 * Start the main async event loop by executing a coroutine with 
@@ -48,14 +48,14 @@ asyncio.run(myfunc(a, b))
 * Awaitables can be awaited (sequential), or asyncio.gather(list_of_awaitables]) (simultaneous)
 * asyncio.wait_for(awaitable, timeout) will cancel an awaitable after timeout time
 
-== Async generator function
+## Async generator function
 
 * Any function declared as `async def`, and has `yield` statements in it.
 * Used to produce values for an `async for` loop.
 	* `async for` does an `await` on every next (or `__anext__` on the async iterator)
 	* The upshot is that the generator function's calculation of the next value will be asynchronous, but the calling coroutine will cede until it's ready
 
-== Async with
+## Async with
 
 * Used with an async context manager
 * Just like a normal context manager, except that the __enter__ and __exit__ are coroutines, and the `async with` will `await` them.
