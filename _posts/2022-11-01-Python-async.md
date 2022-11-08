@@ -15,7 +15,7 @@
 
 Because `send` causes 'yield' to return a value, you can write generators to act as consumers in a pipeline, for example. You write the generator as an infinite loop where it does a `yield` at the start of that loop to receive a value. It then uses that value (processes it in some way) before passing it on to another generator that was configured as the destination.
 
-In the calling function, you create the generator and advance it to it's first yield by calling `next` once. Then, you generate values that need to be sent down the pipeline and call `send` on the generator to pass them along. In [PEP-0342](https://peps.python.org/pep-0342/) there is a decorator that supports this pattern:
+In the calling function, you create the generator and advance it to its first yield by calling `next` once. Then, you generate values that need to be sent down the pipeline and call `send` on the generator to pass them along. In [PEP-0342](https://peps.python.org/pep-0342/) there is a decorator that supports this pattern:
 
 ```python
 def consumer(func):
