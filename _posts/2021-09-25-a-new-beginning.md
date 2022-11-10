@@ -2,8 +2,6 @@
 A new beginning: an SRE learning project
 ---
 
-___In which the author resolves to become up-to-date with programming and deployment practise___
-
 ## The Big Hairy-Arsed Goal
 
 While I did a few months in a coding role in late 2019, it's still been a long time since I was a full-time developer working on a team. It seems such a pity to have all those skills stay dormant, becoming more and more out of date, and so I'm going to spend some time refreshing them.
