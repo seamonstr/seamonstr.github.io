@@ -275,7 +275,7 @@ However, the `col-md-*` classes will not exist, as they're inside a query requir
 
 Breakpoint-specific classes with a size of `auto` are provided so that you can specify some columns as taking on their natural size for some breakpoints, but fixed for others. Similarly, a class of `col-<size>` is provided, which sets the size to 0% but a grow-factor of 1; specifying this for every column for that breakpoint will make them all of equal size.
 
-Similarly to the above, reactive classes are provided for the alignment and spacing of flex items:
+Similarly to the above, responsive classes are provided for the alignment and spacing of flex items:
 * `align-items-<size>-start|end|baseline|center`
 * `justify-content-<size>-evenly|around|between|centre|start|end`
 * `flex-<size>-wrap|nowrap`
