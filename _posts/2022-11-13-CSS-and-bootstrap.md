@@ -48,7 +48,23 @@ The condition in the `@media` rule is a `media query`: a set of attributes that 
 	/* Stuff */
 }
 ```
+## CSS variables
 
+You can assign values to variables and use those later to avoid duplicating literals. Variables are assigned in rules, and are then in scope anywhere that rule applies:
+
+```css
+:root {
+	--myvar: brown;
+}
+```
+
+You use the variables with:
+
+```css
+p {
+	background-color: var(--myvar);
+}
+```
 ## CSS selectors
 
 * `div {background: blue}` - select by element type
@@ -137,9 +153,11 @@ It's left/right, up/down agnostic; its "start edge" flips depending on the langu
 
 * Enable with `display: flex` on a container.
 * The child `flex` attribute is a shorthand one that can mean multiple things:
-	* Set the children's `flex` value to an int to create proportional sizing, and hardcode the size with a pixel value (eg. `100px`)
-  		* In this case, set `flex-wrap` to `wrap` to enable flowing onto a new row / column.
-	* You can give an additional two parameters for `flex-grow` and `flex-shrink` respectively. These are factors used to calculate how much each item should grow or shrink when resizing to fit items in. Set to `0` to set to "not at all".
+	* One value, integer: Set the child's `flex-grow`. This specifies how much of the container's remaining space should go to the item. *Remaining space* is defined as the space remaining after all siblings' sizes have been allocated. The remaining space is allocated according to the ratio defined by all sibling's grow factors.
+	* One value, size (em, rem, px, %), or [other keywords](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis): set the child's `flex-basis`, or initial size. If `flex-grow` and `flex-shrink` are specified, the item may grow or shink accordingly.
+	* Two values: the first is `flex-grow`. If the second has no unit, then it becomes `flex-shrink`; `flex-basis` is set to 0. Otherwise, the second becomes `flex-basis`; `flex-shrink` is set to 1.
+	* Three values: `flex-grow`, `flex-shrink`, `flex-basis` respectively.
+	
 * Set  the parent's `flex-direction` to set the direction of the main axis.
 * Set `flex-wrap` on the parent to `wrap` to create new rows of items when you overflow in the flex-direction; only a problem with fixed-size subitems.
 * Aligning:
@@ -203,7 +221,7 @@ You can specify the size of the gap between rows, columns or both with `row-gap`
 * A single value sets both row and column
 * Two values sets row gap then column gap
 
-### Bootstrap layout: flexbox grid
+## Bootstrap CSS - layout
 
 ### Breakpoints
 
@@ -211,3 +229,56 @@ Media queries are used in Angular implement "breakpoints" - pre-defined viewport
 
 Bootstrap has implemented a number of breakpoints that correspond to small, medium, large and extra large devices; each breakpoint is characterised by a viewport width. Maximum and minimum width are specified in different cases in Bootstrap. 
 
+The breakpoints get redefined according to the viewport size; a breakpoint's size will be its configured size (according to Bootstrap) or the appropriate size of the viewport, whichever is the larger. In other words, on a viewport that will fit a `lg` breakpoint, the `sm` and `md` breakpoints are redefined to be the same as `lg`.
+
+### Bootstrap grid
+
+Bootstrap grid is a way to lay out your page. You create rows with cells for your content; the reactive approach of bootstrap allows those rows to stack (ie. render each child at 100% of parent width, so you end up with one column) when the screen gets narrower than the viewport size you used when building.
+
+Bootstrap `container` classes set the width appropriately, and apply some padding and margins. 
+
+`.container` chooses the right breakpoint (and thus width of container) for your viewport. `.container-fluid` always gives you 100% width.
+
+`row` is a flexbox wrapper; you fill it with column divs. Each column div needs a class indicating it's a column:
+* `col` is a vanilla flavoured column with `flex` set to `1` (ie. proportional sizing of one).
+* `col-x` is a set of classes used to specify how wide you want the column; x is an integer indicating how many 12ths of the row you want to occupy with that column.
+
+#### Reactive sizing with bootstrap grids
+
+Reactive sizing is achieved with the `col-<size>-<count>` classes, where `size` is one of `sm`, `md`, `lg`, `xl` and `xxl`. The `count` is the number of 12ths the column should occupy.
+
+Using these classes, you can specify a different set of columns sizes for each screen size; for a small screen you may want a 50/50 split between two columns, when for larger screens you may want that to be 30/70.
+
+The browser will use the design for the smallest screen size that fits; you can specify a small and medium design, and the medium will be used for everything from medium upwards.
+
+An example with two specified designs:
+
+```html
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-md-2">
+                First
+            </div>
+            <div class="col-sm-4 col-md-5">
+                One of three cols
+            </div>
+            <div class="col-sm-4 col-md-5">
+                One of three cols
+            </div>
+        </div>
+    </div>
+```
+
+The way this is achieved is that Bootstrap declares the various classes if their minimum screen size has been met; ie. for a screen size of 700px, the `col-sm-*` classes will be defined as they're declared within a `@media(min-width:576px)` media query.  
+
+However, the `col-md-*` classes will not exist, as they're inside a query requiring 768px. So, for the above html, only `sm` classes will exist and will be applied.  If the screen is large enough, both the `sm` and `md` classes will exist and will be applied - but as the `md` class is specified later, it will overwrite the CSS attributes applied by the `sm` classes.
+
+Breakpoint-specific classes with a size of `auto` are provided so that you can specify some columns as taking on their natural size for some breakpoints, but fixed for others. Similarly, a class of `col-<size>` is provided, which sets the size to 0% but a grow-factor of 1; specifying this for every column for that breakpoint will make them all of equal size.
+
+Similarly to the above, reactive classes are provided for the alignment and spacing of flex items:
+* `align-items-<size>-start|end|baseline|center`
+* `justify-content-<size>-evenly|around|between|centre|start|end`
+* `flex-<size>-wrap|nowrap`
+* Ditto grow and shrink (to set grow factors)
+
+...and in fact, you can specify totall different layouts based on sizes. Grid, flex, inline, block, order, margins, padding, etc.
