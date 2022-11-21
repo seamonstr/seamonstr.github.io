@@ -148,7 +148,9 @@ Then call that from the HTML template:
 
 ## Two-way binding
 
-In two-way binding, the zen is that we're binding a named attribute on an element to a value provided externally to that element. For this to work, Angular requires that if the element has an attribute named (for example) `val`, then it will also have an event named `valChange`. [Docs on how to write attributes to fit this pattern are here.](https://angular.io/guide/two-way-binding) Spoiler: you use `Input` and `Output` decorators to tag values and emitters in the class. 
+In two-way binding, we're binding a named attribute on an element to a value provided externally to that element. "Element", in this case, refers to any DOM element - a standard one, or a custom one that we implement in Angular. 
+
+For this to work, Angular requires that if the element has an attribute named (for example) `val`, then it will also have an event named `valChange`. [Docs on how to write attributes to fit this pattern are here.](https://angular.io/guide/two-way-binding) Spoiler: you use `Input` and `Output` decorators to tag values and emitters in the class. 
 
 If the element follows this pattern, then you can do the following to have MyCustomElement continuously updated as the value changes, and have the value update as MyCustomElement changes it. 
 
@@ -156,7 +158,7 @@ If the element follows this pattern, then you can do the following to have MyCus
 <MyCustomElement [(val)]="someValue">
 ``` 
 
-This is shorthand for the following (assuming that `MyCustomElement`'s output emitter is just emitting the changed value):
+This is shorthand for the following (assuming that `MyCustomElement`'s output emitter is just emitting the changed value). `[val]` is used to tell MyCustomElement that its value needs changing; `changeVal` is the event that will be thrown by an emitter in `MyCustomElement` publish a change that happened.
 
 ```html
 <MyCustomElement [val]="someValue" (changeVal)="someValue = $event">
@@ -214,9 +216,10 @@ These values are also available through the `ngModel` directive, which is access
 
 ```html
 <input [(ngModel)]="this.firstName" type="text" name="FName" #f="ngModel">
-  <span [hidden]="!(f.dirty && f.errors['required'])">Enter the first name</span> 
+  <span [hidden]="!(f.dirty && f.errors?.['required'])">Enter the first name</span> 
 ```
-Note how there's no need to check if `f.errors` is non-null before subscripting it; the Angular authors saw that the most common case in the expression syntax was that you wanted to check chained attributes for nullness, and short-circuit a return of `undefined` if necessary. They implemented the syntax so that this is how it works - essentially there an implicit `?.` in every chaining.
+
+Note the safe chaining operator `?.` - if `errors` is null, the operator causes JS to stop the chaining and just return `undefined` at that point.
 
 You can add a style to the module's css (`src/styles.css`) that will apply for controls that have the invalid, touched and dirty classes set, but do not have an `ngForm` atttribute:
 
@@ -232,7 +235,8 @@ You can add a style to the module's css (`src/styles.css`) that will apply for c
 * Matching by attribute: `div[bob="boo"] {}`
   * Regex style matching operators: `div[bob^="http"] {}`, `dev[bob$=".txt"] {}`
   * Case sensitive: `div[bob="boo" s] {}`, insensitive: `div[bob="boo" i] {}`
-  * Multiple-matchers means `and`: `div[bob="boo" s] div[bob="boo" i] {}`
+  * Multiple selectors means `and`: `div[bob="boo" s] div[bob="boo" i] {}`
+  * Multiple selectors with comma delimiting means `or`: `div[bob="boo" s] div[bob="boo" i] {}`
 * ID matchers: `#myID {}`
 * You can achieve `or` behaviour with multiple, comma-delimited selectors for a single style.
 * the `:not()` contains multiple selectors to trim the resulting set of elements.
@@ -243,9 +247,19 @@ Used to inject a reference to a DOM element into a TS class. The references get 
 
 The `ViewChild` selectors can only see components inside the current components - not grandchildren or parents.
 * Select by class: `@ViewChild(MySubComponent) mySub: MySubComponent`
-* Select by reference from HTML: `<h2 #title>STuff</h2>`, then `@ViewChild('title') title: ElementRef`; also works for both `ngForm` and `ngModel`.
+* Select by reference from HTML: `<h2 #title>STuff</h2>`, then `@ViewChild('title') title: ElementRef`. This also works for both `ngForm` and `ngModel`:
+
+```html
+    <div class="card" [hidden]="!isAddNew" #myForm="ngForm">
+```
+... and:
+```ts
+  @ViewChild('myForm')
+  customerForm: NgForm | undefined = undefined;
+```
 
 [More docs here.](https://blog.angular-university.io/angular-viewchild/)
+
 ## Deployment
 
 Build the app with `npx ng build -c production`; gives you a `dist` folder with all required artefacts.
