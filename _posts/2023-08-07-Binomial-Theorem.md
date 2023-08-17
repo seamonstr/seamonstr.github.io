@@ -104,7 +104,7 @@ So, any expression of $(a+b)^n$ will give rise to a set of terms: each will be s
 $${n \choose k}(a^{n-k}b^k)$$
 
 The final answer will be the sum of all such terms, with $k$ starting at $0$ and ending at $n$:
-$$(a+b)^k = \sum_{k=0}^{n}{{n \choose k}(a^{n-k}b^k)}$$
+$$(a+b)^k = \sum_{k=0}^{n}{ {n \choose k}(a^{n-k}b^k) }$$
 # The Binomial Theorem - raising binomials to powers
 
 $(a+b)^2 = (a^2 + 2ab + b^2)$
